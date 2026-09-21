@@ -1,0 +1,71 @@
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: Arial, sans-serif;
+}
+body {
+background: #f5f7fb;
+}
+.container {
+width: 100%;
+max-width: 700px;
+margin: 60px auto;
+padding: 30px;
+}
+h1 {
+text-align: center;
+margin-bottom: 30px;
+color: #222;
+}
+
+.busca {
+display: flex;
+gap: 12px;
+margin-bottom: 25px;
+}
+input {
+flex: 1;
+padding: 14px;
+border: 1px solid #ccc;
+border-radius: 8px;
+font-size: 16px;
+}
+button {
+border: none;
+background: #2563eb;
+color: white;
+padding: 14px 24px;
+border-radius: 8px;
+cursor: pointer;
+font-weight: bold;
+}
+
+button:hover {
+background: #1d4ed8;
+}
+.card {
+background: white;
+padding: 25px;
+border-radius: 12px;
+box-shadow: 0 4px 18px rgba(0,0,0,.08);
+}
+.card h2 {
+margin-bottom: 15px;
+color: #111;
+}
+.card p {
+margin: 8px 0;
+color: #444;
+}
+
+.loading {
+color: #2563eb;
+margin-bottom: 20px;
+font-weight: bold;
+}
+.erro {
+color: #dc2626;
+margin-bottom: 20px;
+font-weight: bold;
+}

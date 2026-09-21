@@ -1,0 +1,30 @@
+<div class="container">
+<h1>Consulta CEP</h1>
+<div class="busca">
+<input
+type="text"
+placeholder="Digite o CEP (somente números)"
+[formControl]="cepControl"
+/>
+<button (click)="buscar()">
+Buscar
+</button>
+</div>
+
+@if (loading()) {
+<p class="loading">Consultando...</p>
+}
+@if (erro()) {
+<p class="erro">{{ erro() }}</p>
+}
+@if (endereco(); as cep) {
+<div class="card">
+<h2>Endereço encontrado</h2>
+<p><strong>CEP:</strong> {{ cep.cep }}</p>
+<p><strong>Rua:</strong> {{ cep.logradouro }}</p>
+<p><strong>Bairro:</strong> {{ cep.bairro }}</p>
+<p><strong>Cidade:</strong> {{ cep.localidade }}</p>
+<p><strong>UF:</strong> {{ cep.uf }}</p>
+</div>
+}
+</div>
