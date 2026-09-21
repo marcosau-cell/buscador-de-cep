@@ -1,30 +1,209 @@
-<div class="container">
-<h1>Consulta CEP</h1>
-<div class="busca">
-<input
-type="text"
-placeholder="Digite o CEP (somente números)"
-[formControl]="cepControl"
-/>
-<button (click)="buscar()">
-Buscar
-</button>
-</div>
+<header class="header">
 
-@if (loading()) {
-<p class="loading">Consultando...</p>
-}
-@if (erro()) {
-<p class="erro">{{ erro() }}</p>
-}
-@if (endereco(); as cep) {
-<div class="card">
-<h2>Endereço encontrado</h2>
-<p><strong>CEP:</strong> {{ cep.cep }}</p>
-<p><strong>Rua:</strong> {{ cep.logradouro }}</p>
-<p><strong>Bairro:</strong> {{ cep.bairro }}</p>
-<p><strong>Cidade:</strong> {{ cep.localidade }}</p>
-<p><strong>UF:</strong> {{ cep.uf }}</p>
-</div>
-}
-</div>
+  <div class="logo">
+    <span>🔎</span>
+
+    <div>
+      <h1>Consulta Postal</h1>
+      <p>Encontre códigos postais pelo mundo</p>
+    </div>
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <section class="busca-card">
+
+    <h2>Qual CEP quer achar?</h2>
+
+    <p class="descricao">
+      Escolha o país e digite o código postal.
+      A busca é automática.
+    </p>
+
+
+    <label>País</label>
+
+    <select
+      [value]="paisSelecionado()"
+      (change)="trocarPais($event)"
+    >
+
+      @for (pais of paises; track pais.codigo) {
+
+        <option [value]="pais.codigo">
+
+          {{ pais.bandeira }}
+          {{ pais.nome }}
+
+        </option>
+
+      }
+
+    </select>
+
+
+    <label>Código postal</label>
+
+    <div class="input-box">
+
+      <span>🔎</span>
+
+      <input
+        type="text"
+        [formControl]="cepControl"
+        [attr.maxlength]="paisAtual().tamanho"
+        [placeholder]="'Ex: ' + paisAtual().exemplo"
+      >
+
+    </div>
+
+
+    <div class="formato">
+
+      <span>
+        {{ paisAtual().bandeira }}
+      </span>
+
+      <div>
+
+        <strong>
+          {{ paisAtual().nome }}
+        </strong>
+
+        <p>
+          Formato: {{ paisAtual().formato }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+    @if (loading()) {
+
+      <p class="loading">
+        🔎 Buscando...
+      </p>
+
+    }
+
+
+    @if (erro()) {
+
+      <p class="erro">
+        ⚠️ {{ erro() }}
+      </p>
+
+    }
+
+
+    @if (endereco()) {
+
+      <div class="resultado">
+
+        <h3>📍 Endereço encontrado</h3>
+
+        <p>
+          <strong>Código:</strong>
+          {{ endereco().codigo }}
+        </p>
+
+
+        @if (endereco().rua) {
+
+          <p>
+            <strong>Rua:</strong>
+            {{ endereco().rua }}
+          </p>
+
+        }
+
+
+        @if (endereco().bairro) {
+
+          <p>
+            <strong>Bairro:</strong>
+            {{ endereco().bairro }}
+          </p>
+
+        }
+
+
+        <p>
+          <strong>Cidade:</strong>
+          {{ endereco().cidade }}
+        </p>
+
+        <p>
+          <strong>Estado / Região:</strong>
+          {{ endereco().estado }}
+        </p>
+
+        <p>
+          <strong>País:</strong>
+          {{ endereco().pais }}
+        </p>
+
+      </div>
+
+    }
+
+  </section>
+
+
+  <aside class="guia">
+
+    <h2>🌎 Guia de códigos</h2>
+
+    <p class="subtitulo">
+      Tamanho por país
+    </p>
+
+
+    @for (pais of paises; track pais.codigo) {
+
+      <div
+        class="pais"
+        [class.ativo]="pais.codigo === paisSelecionado()"
+      >
+
+        <div>
+
+          <strong>
+            {{ pais.bandeira }}
+            {{ pais.nome }}
+          </strong>
+
+          <p>
+            {{ pais.formato }}
+          </p>
+
+        </div>
+
+
+        <span>
+          {{ pais.tamanho }}
+        </span>
+
+      </div>
+
+    }
+
+
+    <div class="dica">
+
+      💡 Não precisa clicar em nenhum botão.
+      Ao terminar de digitar, a busca começa.
+
+    </div>
+
+    <small class="fonte">
+      Dados internacionais: OpenStreetMap
+    </small>
+
+  </aside>
+
+</main>
